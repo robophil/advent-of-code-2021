@@ -8,14 +8,18 @@ use std::{
     time::SystemTime,
 };
 
-use crate::questions::day1;
 use crate::utils::files::{file_to_string_vec, get_input_file_path};
+use crate::{
+    questions::{day1, day2},
+    solutions::Solution,
+};
 
 // use solutions::Solution;
 
 fn main() -> Result<(), Box<dyn Error>> {
     println!("Welcome to AOC 2021");
-    let solutions = vec![day1::Question];
+    let solutions: Vec<Box<dyn Solution>> =
+        vec![Box::new(day1::Question), Box::new(day2::Question)];
     let mut day = String::new();
     let mut part = String::new();
 
@@ -29,11 +33,19 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let day = day.trim();
     let part = part.trim();
+
     println!("AOC:2021 Solving Day {}, part {} ....", day, part);
 
     let path_to_file = get_input_file_path(day, part);
     let input = file_to_string_vec(&path_to_file)?;
-    print!("Input: {:?}", input);
+
+    let solution = &solutions[day.parse::<usize>()? - 1];
+
+    if part == "1" {
+        println!("Solution: {}", solution.solve_input_1(&input)?);
+    } else {
+        println!("Solution: {}", solution.solve_input_2(&input)?);
+    }
 
     println!("Elapsed_ms: {}", start_time.elapsed()?.as_millis());
     Ok(())
