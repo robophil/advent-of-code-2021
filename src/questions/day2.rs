@@ -5,7 +5,7 @@ pub struct Question;
 
 impl Question {
     fn solve(&self, input: &Vec<String>) -> SolutionResult {
-        Ok("1".to_string())
+        Ok("2".to_string())
     }
 }
 
